@@ -55,27 +55,23 @@ The theoretical mean of the distribution is **`r mean_theo`**, which is very clo
 
 _2. Show how variable the sample is (via variance) and compare it to the theoretical variance of the distribution._
 
-explanations of the simulations you ran, with the accompanying R code. Your explanations should make clear what the R code accomplishes
+The theoretical variance is calculated by (1/lambda)^2/# of exponentials and the actual variance is calculated using the R function var.
+
+```{r}
+var_theo <- ((1/lambda)^2)/sampledist
+var_actual <- var(samplemean)
+```
+
+The theoretical variance is **`r var_theo`** and the actual variance is **`r var_actual`**.  Some explanation...
 
 _3. Show that the distribution is approximately normal._
 
-In point 3, focus on the difference between the distribution of a large collection of random exponentials and the distribution of a large collection of averages of 40 exponentials. 
+_In point 3, focus on the difference between the distribution of a large collection of random exponentials and the distribution of a large collection of averages of 40 exponentials._
 
-As a motivating example, compare the distribution of 1000 random uniforms
-hist(runif(1000))
-and the distribution of 1000 averages of 40 random uniforms
-
-mns = NULL
-for (i in 1 : 1000) mns = c(mns, mean(runif(40)))
-hist(mns)
-This distribution looks far more Gaussian than the original uniform distribution!
+_This exercise is asking you to use your knowledge of the theory given in class to relate the two distributions.  Confused?  Try re-watching video lecture 07 for a starter on how to complete this project._
 
 
-This exercise is asking you to use your knowledge of the theory given in class to relate the two distributions.  
-Confused?  Try re-watching video lecture 07 for a starter on how to complete this project.
-
-
-
+## Other stuff to make sure is included
 
 Of course, there are multiple ways one could structure a report to address the requirements above.  However, the more clearly you pose and answer each question, the easier it will be for reviewers to clearly identify and evaluate your work. 
 
