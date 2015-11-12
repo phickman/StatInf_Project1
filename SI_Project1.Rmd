@@ -22,13 +22,13 @@ Generate the simulation data in order to compare the sample mean and compare it 
 
 ```{r}
 # number of simulations, lambda and distribution sample
-nosim <- 1000
+simulations <- 1000
 lambda <- 0.2
-sampledist <- 40
+samples <- 40
 
-samplemean = NULL
+mean_samples = NULL
 set.seed(283764)
-for (i in 1:nosim) samplemean = c(samplemean, mean(rexp(sampledist,lambda)))
+for (i in 1:simulations) mean_samples = c(mean_samples, mean(rexp(samples,lambda)))
 ```
 
 _1. Show the sample mean and compare it to the theoretical mean of the distribution._
@@ -36,8 +36,8 @@ _1. Show the sample mean and compare it to the theoretical mean of the distribut
 Plot the simulated distribution with the red line marking the mean for the distribution.
 
 ```{r}
-hist(samplemean, main = "Distribution of averages")
-abline(v = mean(samplemean), lwd=2, col="red")
+hist(mean_samples, main = "Sample distribution of averages")
+abline(v = mean(mean_samples), lwd=2, col="red")
 ```
 
 ### The Mean
@@ -46,7 +46,7 @@ Calculate the theoretical and actual mean of the distribution.
 
 ```{r}
 mean_theo <- 1/lambda
-mean_dist <- mean(samplemean)
+mean_dist <- mean(mean_samples)
 ```
 
 The theoretical mean of the distribution is **`r mean_theo`**, which is very close to the actual mean of the simulated distribution, which is **`r mean_dist`**.
@@ -55,14 +55,17 @@ The theoretical mean of the distribution is **`r mean_theo`**, which is very clo
 
 _2. Show how variable the sample is (via variance) and compare it to the theoretical variance of the distribution._
 
-The theoretical variance is calculated by (1/lambda)^2/# of exponentials and the actual variance is calculated using the R function var.
+The **theoretical variance** is defined as $Var(\bar X) = \sigma^2/n$
+
+The **sample variance** is defined as $S^2 = \frac{\sum_{i=1}^n (X_i - \bar X)^2}{n-1}$
+Using the R function `var()` to calculate the variable of the sample distribution.
 
 ```{r}
-var_theo <- ((1/lambda)^2)/sampledist
-var_actual <- var(samplemean)
+var_theo <- ((1/lambda)^2)/samples
+var_actual <- var(mean_samples)
 ```
 
-The theoretical variance is **`r var_theo`** and the actual variance is **`r var_actual`**.  Some explanation...
+The theoretical variance is **`r var_theo`** and the actual variance is **`r var_actual`**.  Both variances are similar which indicates the sample distribution is similar to the theoretical distribution.
 
 _3. Show that the distribution is approximately normal._
 
@@ -70,6 +73,46 @@ _In point 3, focus on the difference between the distribution of a large collect
 
 _This exercise is asking you to use your knowledge of the theory given in class to relate the two distributions.  Confused?  Try re-watching video lecture 07 for a starter on how to complete this project._
 
+```{r}
+hist(mean_samples, main = "Sample distribution of averages")
+abline(v = mean(mean_samples), lwd=2, col="green")
+
+# add the normal distribution
+xfit <- seq(min(mean_samples),max(mean_samples),length=40) 
+yfit <- dnorm(xfit,mean=mean(mean_samples),sd=sd(mean_samples)) 
+yfit <- yfit*diff(h$mids[1:2])*length(mean_samples) 
+lines(xfit, yfit, col="red", lwd=2)
+
+# add the sample distribution
+g <- mean_samples
+xfit<-seq(min(g),max(g),length=40) 
+yfit<-dnorm(xfit,mean=mean(g),sd=sd(g)) 
+yfit <- yfit*diff(h$mids[1:2])*length(g) 
+lines(xfit, yfit, col="black", lwd=2)
+#legend()
+
+g <- mean_samples
+h<-hist(g, breaks=10, density=10, col="lightgray", xlab="Accuracy", main="Overall") 
+xfit<-seq(min(g),max(g),length=40) 
+yfit<-dnorm(xfit,mean=mean(g),sd=sd(g)) 
+yfit <- yfit*diff(h$mids[1:2])*length(g) 
+lines(xfit, yfit, col="black", lwd=2)
+
+
+# density
+hist(scale(mean_samples), probability = TRUE, main = "Sample distribution of averages")
+abline(v = mean(mean_samples), lwd=2, col="green")
+#hist(scale(df$mean),probability=T,main='',ylim=c(0,0.5),xlab='')
+curve(dnorm(x,0,1),-3,3, col='red',add=T) # normal distribution
+lines(density(scale(mean_samples)),col='blue') # actual distribution 
+#legend(2,0.4,c('Normal','Actual'),cex=0.8,col=c('red','blue'),lty=1)
+#
+
+qqnorm(mean_samples);
+qqline(mean_samples)
+```
+
+Calculate confidence intervals??
 
 ## Other stuff to make sure is included
 
