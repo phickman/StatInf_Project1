@@ -58,6 +58,7 @@ _2. Show how variable the sample is (via variance) and compare it to the theoret
 The **theoretical variance** is defined as $Var(\bar X) = \sigma^2/n$
 
 The **sample variance** is defined as $S^2 = \frac{\sum_{i=1}^n (X_i - \bar X)^2}{n-1}$
+
 Using the R function `var()` to calculate the variable of the sample distribution.
 
 ```{r}
@@ -74,7 +75,7 @@ _In point 3, focus on the difference between the distribution of a large collect
 _This exercise is asking you to use your knowledge of the theory given in class to relate the two distributions.  Confused?  Try re-watching video lecture 07 for a starter on how to complete this project._
 
 ```{r}
-hist(mean_samples, main = "Sample distribution of averages")
+h <- hist(mean_samples, main = "Sample distribution of averages")
 abline(v = mean(mean_samples), lwd=2, col="green")
 
 # add the normal distribution
@@ -92,12 +93,11 @@ lines(xfit, yfit, col="black", lwd=2)
 #legend()
 
 g <- mean_samples
-h<-hist(g, breaks=10, density=10, col="lightgray", xlab="Accuracy", main="Overall") 
+h <-hist(g, breaks=10, density=10, col="lightgray", xlab="Accuracy", main="Overall") 
 xfit<-seq(min(g),max(g),length=40) 
 yfit<-dnorm(xfit,mean=mean(g),sd=sd(g)) 
 yfit <- yfit*diff(h$mids[1:2])*length(g) 
 lines(xfit, yfit, col="black", lwd=2)
-
 
 # density
 hist(scale(mean_samples), probability = TRUE, main = "Sample distribution of averages")
