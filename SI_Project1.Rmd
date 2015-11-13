@@ -7,18 +7,13 @@ output:
     keep_md: false
 ---
 
-
 ## Overview
 
-An overview of ... (2-3) sentences
+Investigate the random exponential distribution and the Central Limit Theorem.  The Central Limit Theorem states that the distribution of averages of IID variables (properly normalised) becomes that of a standard normal as the sample size increases.  This investigation should demonstrate the average random exponential sample to be normally distributed.
 
-Investigate the exponential distribution in R and compare it with the Central Limit Theorem. The exponential distribution is simulated in R with rexp(n, lambda) where lambda is the rate parameter. The mean of exponential distribution is 1/lambda and the standard deviation is also 1/lambda. For this investigation, lambda is 0.2 for all of the simulations.  The simulation will investigate the distribution of averages of 40 exponentials a thousand times.
+## Simulations
 
-## Simulation
-
-_Illustrate via simulation and associated explanatory text the properties of the distribution of the mean of 40 exponentials._
-
-Generate the simulation data in order to compare the sample mean and compare it to the theoretical mean of the distribution.
+The exponential distribution is simulated in R with rexp(n, lambda) where lambda is the rate parameter. The mean of exponential distribution is 1/lambda and the standard deviation is also 1/lambda. For this investigation lambda is 0.2 for all of the simulations.  The simulation will create a distribution of averages of 40 exponentials 1000 times.
 
 ```{r}
 # number of simulations, lambda and distribution sample
@@ -26,85 +21,71 @@ simulations <- 1000
 lambda <- 0.2
 samples <- 40
 
+# generate a dataset of random exponential means
 mean_samples = NULL
 set.seed(283764)
 for (i in 1:simulations) mean_samples = c(mean_samples, mean(rexp(samples,lambda)))
 ```
 
-_1. Show the sample mean and compare it to the theoretical mean of the distribution._
-
-Plot the simulated distribution with the red line marking the mean for the distribution.
+The histogram below plots the sample distribution with the red line marking the mean.
 
 ```{r}
 hist(mean_samples, main = "Sample distribution of averages")
-abline(v = mean(mean_samples), lwd=2, col="red")
+abline(v = mean(mean_samples), lwd = 2, col = "red")
 ```
 
-### The Mean
+## Sample Mean versus Theoretical Mean
 
-Calculate the theoretical and actual mean of the distribution.
+Are the mean of the distribution and the theoretical mean similar?
 
 ```{r}
 mean_theo <- 1/lambda
 mean_dist <- mean(mean_samples)
 ```
 
-The theoretical mean of the distribution is **`r mean_theo`**, which is very close to the actual mean of the simulated distribution, which is **`r mean_dist`**.
+The theoretical mean of the distribution is **`r mean_theo`**, which is very close to the actual mean of the distribution, which is **`r mean_dist`**.  Given the distribution of averages is very similar to a normal distribution, this is to be expected.
 
-### The Variance
-
-_2. Show how variable the sample is (via variance) and compare it to the theoretical variance of the distribution._
+## Sample Variance versus Theoretical Variance
 
 The **theoretical variance** is defined as $Var(\bar X) = \sigma^2/n$
 
 The **sample variance** is defined as $S^2 = \frac{\sum_{i=1}^n (X_i - \bar X)^2}{n-1}$
 
-Using the R function `var()` to calculate the variable of the sample distribution.
+In this case the R function `var()` is used to calculate the variable of the sample distribution.
 
 ```{r}
 var_theo <- ((1/lambda)^2)/samples
 var_actual <- var(mean_samples)
 ```
 
-The theoretical variance is **`r var_theo`** and the actual variance is **`r var_actual`**.  Both variances are similar which indicates the sample distribution is similar to the theoretical distribution.
+The theoretical variance is **`r var_theo`** and the actual variance is **`r var_actual`**.  Both variances are similar, which indicates the sample distribution is similar to the theoretical distribution.
 
-### The Distribution
+## Distribution
 
-_3. Show that the distribution is approximately normal._
-
-_In point 3, focus on the difference between the distribution of a large collection of random exponentials and the distribution of a large collection of averages of 40 exponentials._
-
-_This exercise is asking you to use your knowledge of the theory given in class to relate the two distributions.  Confused?  Try re-watching video lecture 07 for a starter on how to complete this project._
+In the figure below you will notice the similarity between the normal distribution, in red, and the sample distribution, in blue.  In this simulation the distribution is approximately normal.
 
 ```{r}
-
-hist(mean_samples, probability = TRUE, density=10, col="lightgray", main = "Sample distribution of averages")
+hist(mean_samples, probability = TRUE, density=10, col="lightgray", main = "Sample distribution of average random exponentials")
 abline(v = mean(mean_samples), lwd=2, col="green")
-curve(dnorm(x, mean = mean_theo, sd = sqrt(var_theo)), min(mean_samples)-1, max(mean_samples), col = 'red', add = TRUE) # normal distribution
-lines(density(mean_samples), col='blue') # actual distribution 
+# normal distribution
+curve(dnorm(x, mean = mean_theo, sd = sqrt(var_theo)), min(mean_samples)-1, max(mean_samples), col = 'red', add = TRUE)
+# actual distribution 
+lines(density(mean_samples), col='blue')
 legend(x = 6, y = 0.5, c('Normal','Actual'), cex=0.8, col = c('red','blue'), lty = 1)
 ```
 
-Create a dataset of random variables to compare against the set of random averages.
+To compare the difference between the distribution of a large collection of random exponentials and the distribution of a large collection of averages of 40 exponentials we require a new dataset of random exponentials.
 
 ```{r}
+# create a similar sized dataset of random exponentials
 set.seed(283764)
-random_samples <- rexp(simulations,lambda)
+random_samples <- rexp(simulations, lambda)
 
-hist(random_samples, probability = TRUE, main = "Sample distribution of random variables")
-abline(v = mean(random_samples), lwd=2, col="green")
+hist(random_samples, probability = TRUE, main = "Sample distribution of random exponentials")
+abline(v = mean(random_samples), lwd = 2, col = "green")
 
 # add the sample distribution
-curve(dexp(x,.2), 0, 30, col='red', add = TRUE) # normal distribution
-#legend()
+curve(dexp(x, lambda), 0, 30, col = 'blue', add = TRUE)
 ```
 
-## Other stuff to make sure is included
-
-Of course, there are multiple ways one could structure a report to address the requirements above.  However, the more clearly you pose and answer each question, the easier it will be for reviewers to clearly identify and evaluate your work. 
-
-Sample Mean versus Theoretical Mean: Include figures with titles. In the figures, highlight the means you are comparing. Include text that explains the figures and what is shown on them, and provides appropriate numbers.
-
-Sample Variance versus Theoretical Variance: Include figures (output from R) with titles. Highlight the variances you are comparing. Include text that explains your understanding of the differences of the variances.
-
-Distribution: Via figures and text, explain how one can tell the distribution is approximately normal.
+The histogram above demonstrates the distribution of a large collection of random exponentials is not normally distributed.
