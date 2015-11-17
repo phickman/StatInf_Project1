@@ -3,6 +3,10 @@ title: "A comparison of Exponential Distribution and the Central Limit Theorem"
 author: "Paul Hickman"
 date: "`r Sys.Date()`"
 output: 
+  pdf_document:
+    toc: true
+    number_sections: true
+    toc_depth: 1
   html_document:
     keep_md: false
 ---
@@ -89,3 +93,5 @@ curve(dexp(x, lambda), 0, 30, col = 'blue', add = TRUE)
 ```
 
 The histogram above demonstrates the distribution of a large collection of random exponentials is not normally distributed.
+
+Comparing the two histograms aboves demonstrates that a distribution of a large collection of averages of 40 exponentials is approximately normal and a distribution of a large collection of random exponentials is not.
