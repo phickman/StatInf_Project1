@@ -1,0 +1,78 @@
+---
+title: "Tooth Works"
+author: "Paul Hickman"
+date: "`r Sys.Date()`"
+output: 
+  pdf_document:
+    toc: true
+    number_sections: true
+    toc_depth: 1
+  html_document:
+    keep_md: false
+---
+
+# Overview
+
+Now in the second portion of the class, we're going to analyze the ToothGrowth data in the R datasets package. 
+- Load the ToothGrowth data and perform some basic exploratory data analyses 
+- Provide a basic summary of the data.
+- Use confidence intervals and/or hypothesis tests to compare tooth growth by supp and dose. (Only use the techniques from class, even if there's other approaches worth considering)
+- State your conclusions and the assumptions needed for your conclusions. 
+
+Some criteria that you will be evaluated on
+- Did you  perform an exploratory data analysis of at least a single plot or table highlighting basic features of the data?
+- Did the student perform some relevant confidence intervals and/or tests?
+- Were the results of the tests and/or intervals interpreted in the context of the problem correctly? 
+- Did the student describe the assumptions needed for their conclusions?
+
+# Start
+
+The response is the length of odontoblasts (cells responsible for tooth growth) in 60 guinea pigs. Each animal received one of three dose levels of vitamin C (0.5, 1, and 2 mg/day) by one of two delivery methods, (orange juice or ascorbic acid (a form of vitamin C and coded as VC).
+
+A data frame with 60 observations on 3 variables.
+
+[,1]	len	numeric	Tooth length
+[,2]	supp	factor	Supplement type (VC or OJ).
+[,3]	dose	numeric	Dose in milligrams/day
+
+https://stat.ethz.ch/R-manual/R-devel/library/datasets/html/ToothGrowth.html
+
+
+
+```{r}
+data("ToothGrowth")
+
+str(ToothGrowth)
+summary(ToothGrowth)
+head(ToothGrowth)
+table(ToothGrowth$supp,ToothGrowth$dose)
+
+# RR relationships between predictors
+#library(kernlab)
+#data(spam)
+##structureOfADataAnalysis2.pdf
+#plot(log10(trainSpam$capitalAve + 1) ~ trainSpam$type)
+#plot(log10(trainSpam[, 1:4] + 1))
+#plot(hclust(dist(t(trainSpam[,1:57]))))
+#plot(hclust(dist(t(log10(trainSpam[,1:55]))))
+
+plot(log10(ToothGrowth$len))
+plot(log10(ToothGrowth$dose))
+
+boxplot(len ~ supp * dose, data=ToothGrowth, ylab="Tooth Length", main="Boxplots of Tooth Growth Data")
+
+require(graphics)
+coplot(len ~ dose | supp, data = ToothGrowth, panel = panel.smooth)
+
+library(ggplot2)
+ggplot(ToothGrowth, aes(x = supp, y = len)) + geom_boxplot()
+ggplot(ToothGrowth, aes(x = supp, y = len, fill = supp)) + geom_boxplot()
+ggplot(ToothGrowth, aes(x = supp, y = len, fill = supp)) + geom_boxplot() + facet_wrap(~ dose)
+```
+
+
+# Techo
+```{r}
+sessionInfo()
+```
+
