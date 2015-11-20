@@ -61,9 +61,9 @@ The exploratory plots indicate the higher the dose the greater the tooth length.
 
 # Tests
 
-The tests for the null hypothesis assumes there is no difference between the supplement types or dosage levels.
+The tests for the null hypothesis is the supplement type and dose have no effect on tooth growth.
 
-To compare the VC supplement against the three dosage levels we need to subset the data first.
+To compare the VC supplement against the three dosage levels we need to subset the data first and then test.
 
 ```{r}
 # by supplement
@@ -72,19 +72,15 @@ vc <- ToothGrowth[ToothGrowth$supp=="VC",]
 vc_05_1 <- vc[vc$dose %in% c(0.5,1),]
 vc_05_2 <- vc[vc$dose %in% c(0.5,2),]
 vc_1_2 <- vc[vc$dose %in% c(1,2),]
-```
 
-And then test.
-
-```{r}
 t.test(len ~ dose, data = vc_05_1)
 t.test(len ~ dose, data = vc_05_2)
 t.test(len ~ dose, data = vc_1_2)
 ```
 
-The null hypothesis that there is no difference can be rejected in each case.  The higher the dose the greater the tooth length.
+The null hypothesis that there is no difference can be rejected in each case.  The higher the VC dose the greater the tooth length.
 
-To compare the OJ supplement against the three dosage levels we need to subset the data first.
+To compare the OJ supplement against the three dosage levels we need to subset the data first and then test
 
 ```{r}
 # by supplement
@@ -93,30 +89,22 @@ oj <- ToothGrowth[ToothGrowth$supp=="OJ",]
 oj_05_1 <- oj[oj$dose %in% c(0.5,1),]
 oj_05_2 <- oj[oj$dose %in% c(0.5,2),]
 oj_1_2 <- oj[oj$dose %in% c(1,2),]
-```
 
-And then test.
-
-```{r}
 t.test(len ~ dose, data = oj_05_1)
 t.test(len ~ dose, data = oj_05_2)
 t.test(len ~ dose, data = oj_1_2)
 ```
 
-The null hypothesis that there is no difference can be rejected in each case.  The higher the dose the greater the tooth length.
+The null hypothesis that there is no difference can be rejected in each case.  The higher the OJ dose the greater the tooth length.
 
-To compare the dosage to supplement we need to subset the data first.
+To compare the dosage to supplement we need to subset the data first and then test.
 
 ```{r}
 # by dose
 tg05 <- ToothGrowth[ToothGrowth$dose == 0.5,]
 tg1 <- ToothGrowth[ToothGrowth$dose == 1,]
 tg2 <- ToothGrowth[ToothGrowth$dose == 2,]
-```
 
-And then test.
-
-```{r}
 t.test(len ~ supp, data = tg05)
 t.test(len ~ supp, data = tg1)
 t.test(len ~ supp, data = tg2)
