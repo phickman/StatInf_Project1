@@ -9,13 +9,15 @@ output:
 
 # Project Question
 
-Now in the second portion of the class, we're going to analyze the ToothGrowth data in the R datasets package. 
+Now in the second portion of the class, we're going to analyze the ToothGrowth data in the R datasets package.
+
 - Load the ToothGrowth data and perform some basic exploratory data analyses 
 - Provide a basic summary of the data.
 - Use confidence intervals and/or hypothesis tests to compare tooth growth by supp and dose. (Only use the techniques from class, even if there's other approaches worth considering)
 - State your conclusions and the assumptions needed for your conclusions. 
 
 Some criteria that you will be evaluated on
+
 - Did you  perform an exploratory data analysis of at least a single plot or table highlighting basic features of the data?
 - Did the student perform some relevant confidence intervals and/or tests?
 - Were the results of the tests and/or intervals interpreted in the context of the problem correctly? 
@@ -90,20 +92,50 @@ The null hypothesis is there is no difference.
 
 Assume variance is equal
 
-compare VC vs OJ, by dosage (3)
-compare 05 vs 1, compare 05_2, compare 1_2, by combining VC and OJ (6)
-or:
-compare 05 vs 1, compare 05_2, compare 1_2. by VC  (3) + 
-compare 05 vs 1, compare 05_2, compare 1_2. by OJ  (3) 
+For supplements, VC & OJ, compare by dosage:
 
+1. VC_0.5 to VC1
+2. VC_0.5 to VC2
+3. VC_1   to VC2
+4. OJ_0.5 to OJ1
+5. OJ_0.5 to OJ2
+6. OJ_1   to OJ2
+
+For dosage, 0.5, 1 & 2, compare by supplement:
+
+7. 0.5_VC to 0.5_OJ
+8. 1_VC   to 1_OJ
+9. 2_VC   to 2_OJ
 
 ```{r}
-# identify the subset of VC and OJ data
+# by supplement (need to compare)
 vc <- ToothGrowth[ToothGrowth$supp=="VC",]
 oj <- ToothGrowth[ToothGrowth$supp=="OJ",]
 
-# by supplement
-t.test(len ~ supp, data = ToothGrowth)
+vc_05_1 <- vc[vc$dose %in% c(0.5,1),]
+vc_05_2 <- vc[vc$dose %in% c(0.5,2),]
+vc_1_2 <- vc[vc$dose %in% c(1,2),]
+
+t.test(len ~ dose, data = vc_05_1)
+t.test(len ~ dose, data = vc_05_2)
+t.test(len ~ dose, data = vc_1_2)
+
+oj_05_1 <- oj[oj$dose %in% c(0.5,1),]
+oj_05_2 <- oj[oj$dose %in% c(0.5,2),]
+oj_1_2 <- oj[oj$dose %in% c(1,2),]
+
+t.test(len ~ dose, data = oj_05_1)
+t.test(len ~ dose, data = oj_05_2)
+t.test(len ~ dose, data = oj_1_2)
+
+# by dose (need to compare)
+tg05 <- ToothGrowth[ToothGrowth$dose == 0.5,]
+tg1 <- ToothGrowth[ToothGrowth$dose == 1,]
+tg2 <- ToothGrowth[ToothGrowth$dose == 2,]
+
+t.test(len ~ supp, data = tg05)
+t.test(len ~ supp, data = tg1)
+t.test(len ~ supp, data = tg2)
 ```
 
 # Conclusions and Assumptions
