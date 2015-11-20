@@ -11,4 +11,5 @@
 # produced vignettes
 vignettes/*.html
 vignettes/*.pdf
-SI_Project1.html
+*.html
+*.pdf
