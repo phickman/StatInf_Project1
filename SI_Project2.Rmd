@@ -3,7 +3,8 @@ title: "Investigate the effect of Vitamin C on Guinea Pig tooth growth"
 author: "Paul Hickman"
 date: '`r Sys.Date()`'
 output:
-  pdf_document: default
+  pdf_document:
+    default
   html_document:
     keep_md: no
 ---
