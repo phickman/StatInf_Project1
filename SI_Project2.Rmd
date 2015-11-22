@@ -48,23 +48,27 @@ library(ggplot2)
 ToothGrowth$dose <- factor(ToothGrowth$dose)
 
 # supplement by dose
-ggplot(ToothGrowth, aes(x = supp, y = len, fill = supp)) + geom_boxplot() + facet_wrap(~dose) + xlab("Supplement") + ylab("Tooth Length") + ggtitle("Length by Supplement and Dose")
+ggplot(ToothGrowth, aes(x = supp, y = len, fill = supp)) + geom_boxplot() + 
+    facet_wrap(~dose) + xlab("Supplement") + ylab("Tooth Length") + 
+    ggtitle("Length by Supplement and Dose")
 ```
 
 Second, evaluate the dose/supplement on tooth length.
 
 ```{r}
 # dose by supplement
-ggplot(ToothGrowth, aes(x = dose, y = len, fill = dose)) + geom_boxplot() + facet_grid(~supp) + xlab("Tooth Length") + ylab("Supplement") + ggtitle("Length by Dose and Supplement")
+ggplot(ToothGrowth, aes(x = dose, y = len, fill = dose)) + geom_boxplot() + 
+    facet_grid(~supp) + xlab("Tooth Length") + ylab("Supplement") + 
+    ggtitle("Length by Dose and Supplement")
 ```
 
 The exploratory plots indicate the higher the dose the greater the tooth length.  Also, orange juice is associated with greater tooth length, except for the 2mg/g ascorbic acid (VC) supplement.
 
 # Tests
 
-The tests for the null hypothesis is the supplement type and dose have no effect on tooth growth.
+The null hypothesis for the tests is the supplement type and dose have no effect on tooth growth.
 
-To compare the VC supplement against the three dosage levels we need to subset the data first and then test.
+To compare the VC supplement against the three dosage levels we need to subset the data first.
 
 ```{r}
 # by supplement
@@ -81,7 +85,7 @@ t.test(len ~ dose, data = vc_1_2)
 
 The null hypothesis that there is no difference can be rejected in each case.  The higher the VC dose the greater the tooth length.
 
-To compare the OJ supplement against the three dosage levels we need to subset the data first and then test
+To compare the OJ supplement against the three dosage levels we need to subset the data first.
 
 ```{r}
 # by supplement
@@ -98,7 +102,7 @@ t.test(len ~ dose, data = oj_1_2)
 
 The null hypothesis that there is no difference can be rejected in each case.  The higher the OJ dose the greater the tooth length.
 
-To compare the dosage to supplement we need to subset the data first and then test.
+To compare the dosage to supplement we need to subset the data first.
 
 ```{r}
 # by dose
