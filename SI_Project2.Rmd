@@ -66,7 +66,17 @@ The exploratory plots indicate the higher the dose the greater the tooth length.
 
 # Tests
 
-The null hypothesis for the tests is the supplement type and dose have no effect on tooth growth.
+The null hypothesis for the tests is the supplement type and dose have no effect on tooth growth.  Details of the tests performed can be found in the appendix.
+
+The tests indicate that higher doses, no matter the supplement, is associated with greater tooth length.  However, OJ rather than VC is associated with greater tooth length for 0.5 and 1 mg/d dose and is not sufficiently different at the 2 mg/d level.
+
+**Assumptions**
+
+* The variance between the groups is the same
+* There are no other contributing factors to tooth growth
+* The sample size is adequate
+
+# Appendix
 
 To compare the VC supplement against the three dosage levels we need to subset the data first.
 
@@ -116,13 +126,3 @@ t.test(len ~ supp, data = tg2)
 ```
 
 The null hypothesis that there is no difference between supplements can be rejected in each case, except for dose 2mg/d as the confidence interval includes zero.  For dose 0.5 and 1 OJ is associated with greater tooth length.
-
-# Conclusions
-
-In conclusion, higher doses, no matter the supplement, is associated with greater tooth length.  However, OJ rather than VC is associated with greater tooth length for 0.5 and 1 mg/d dose and is not sufficiently different at the 2 mg/d level.
-
-# Assumptions
-
-* The variance between the groups is the same
-* There are no other contributing factors to tooth growth
-* The sample size is adequate

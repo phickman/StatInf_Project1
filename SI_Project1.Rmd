@@ -76,6 +76,10 @@ lines(density(mean_samples), col='blue')
 legend(x = 6, y = 0.5, c('Normal','Actual'), cex=0.8, col = c('red','blue'), lty = 1)
 ```
 
+Comparing the histograms above with the appendix demonstrates that a distribution of a large collection of averages of 40 exponentials is approximately normal and a distribution of a large collection of random exponentials is not.
+
+## Appendix
+
 To compare the difference between the distribution of a large collection of random exponentials and the distribution of a large collection of averages of 40 exponentials we require a new dataset of random exponentials.
 
 ```{r}
@@ -91,5 +95,3 @@ curve(dexp(x, lambda), 0, 30, col = 'blue', add = TRUE)
 ```
 
 The histogram above demonstrates the distribution of a large collection of random exponentials is not normally distributed.
-
-Comparing the two histograms aboves demonstrates that a distribution of a large collection of averages of 40 exponentials is approximately normal and a distribution of a large collection of random exponentials is not.
